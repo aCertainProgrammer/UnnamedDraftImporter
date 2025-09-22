@@ -1,0 +1,10 @@
+services:
+  backend:
+    image: cosmtrek/air:v1.63.0
+    container_name: backend
+    working_dir: /backend
+    restart: always
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "8080:8080"
