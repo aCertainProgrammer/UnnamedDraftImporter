@@ -75,7 +75,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	log.Println("Setting up http handlers...")
-	http.HandleFunc("GET /", indexHandler)
+	http.HandleFunc("/", indexHandler)
 
 	log.Println("Starting server...")
 	err := http.ListenAndServe(ADDR, nil)
