@@ -78,6 +78,10 @@ func main() {
 	http.HandleFunc("GET /", indexHandler)
 
 	log.Println("Starting server...")
-	http.ListenAndServe(ADDR, nil)
+	err := http.ListenAndServe(ADDR, nil)
+	if err != nil {
+		log.Println(err)
+	}
+
 	log.Println("Closing server...")
 }
