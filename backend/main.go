@@ -27,8 +27,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 
 	allowedOrigins := []string{
-		"https://acertainprogrammer.github.io/UnnamedDraftingTool",
-		"https://acertainprogrammer.github.io/UnnamedDraftingTool/",
+		"acertainprogrammer.github.io/UnnamedDraftingTool",
+		"acertainprogrammer.github.io/UnnamedDraftingTool/",
 		"http://localhost:8080",
 		"http://localhost:8080/",
 		"http://127.0.0.1:8080",
