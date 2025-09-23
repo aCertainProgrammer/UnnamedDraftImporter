@@ -74,7 +74,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	log.Println("Setting up http handlers...")
 	http.HandleFunc("GET /", indexHandler)
 
+	log.Println("Starting server...")
 	http.ListenAndServe(ADDR, nil)
+	log.Println("Closing server...")
 }
