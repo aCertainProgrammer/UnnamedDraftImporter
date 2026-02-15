@@ -24,12 +24,13 @@ type (
 	Series       []string
 )
 
-func GetDraftFromDrafterBody(body string) (Draft, error) {
+func GetDraftFromDrafterBody(body string, game int) (Draft, error) {
 	draft := Draft{}
 	words := (strings.Split(string(body), "\\\""))
 
 	pickIndex := 0
 	banIndex := 0
+	gameIndex := 1
 
 	for i := range words {
 		word := words[i]
@@ -41,6 +42,21 @@ func GetDraftFromDrafterBody(body string) (Draft, error) {
 		if strings.Contains(word, "bluePick") || strings.Contains(word, "redPick") {
 			draft.Picks[pickIndex] = strings.ToLower(words[i+2])
 			pickIndex++
+		}
+
+		if draft.Bans[9] != "" && draft.Picks[9] != "" {
+			if gameIndex == game {
+				return draft, nil
+			}
+
+			gameIndex += 1
+			pickIndex = 0
+			banIndex = 0
+
+			for i := 0; i < 10; i++ {
+				draft.Picks[i] = ""
+				draft.Bans[i] = ""
+			}
 		}
 	}
 

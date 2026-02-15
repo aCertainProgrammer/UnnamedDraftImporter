@@ -3,6 +3,8 @@ package main
 import (
 	"io"
 	"net/http"
+	"net/url"
+	"strconv"
 )
 
 func GetResponseBody(url string) ([]byte, error) {
@@ -19,15 +21,25 @@ func GetResponseBody(url string) ([]byte, error) {
 	return respBody, nil
 }
 
-func GetDrafterDraftByURL(url string) (Draft, error) {
+func GetDrafterDraftByURL(url_string string) (Draft, error) {
 	draft := Draft{}
 
-	respBody, err := GetResponseBody(url)
+	respBody, err := GetResponseBody(url_string)
 	if err != nil {
 		return draft, err
 	}
 
-	draft, err = GetDraftFromDrafterBody(string(respBody))
+	urlStruct, err := url.Parse(url_string)
+	if err != nil {
+		return draft, err
+	}
+
+	game, err := strconv.Atoi(urlStruct.Query().Get("game"))
+	if err != nil {
+		return draft, err
+	}
+
+	draft, err = GetDraftFromDrafterBody(string(respBody), game)
 	if err != nil {
 		return draft, err
 	}
