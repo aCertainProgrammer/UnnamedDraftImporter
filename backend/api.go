@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -61,7 +62,8 @@ func GetDrafterSeriesByURL(url string) (PicksAndBans, error) {
 	}
 
 	for i := range series {
-		url := "https://drafter.lol/draft/" + series[i]
+		url := "https://drafter.lol/draft/" + series[i] + "?game=" + strconv.Itoa(i+1)
+		fmt.Println(url)
 		draft, err := GetDrafterDraftByURL(url)
 		if err != nil {
 			return picksAndBans, err

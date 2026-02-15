@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -66,12 +67,17 @@ func GetDraftFromDrafterBody(body string, game int) (Draft, error) {
 func GetSeriesFromDrafterBody(body string) (Series, error) {
 	series := Series{}
 	words := (strings.Split(string(body), "\\\""))
+	seriesId := ""
 
+	fmt.Print(string(body))
 	for i := range words {
 		word := words[i]
+		if strings.Contains(word, "seriesId") {
+			seriesId = words[i+2]
+		}
 		if strings.Contains(word, "draftIDs") {
 			for j := 1; words[i+j*2] != "finishedDraftIDs"; j++ {
-				series = append(series, words[i+j*2])
+				series = append(series, seriesId)
 			}
 
 			break
