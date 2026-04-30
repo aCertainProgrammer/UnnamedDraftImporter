@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -69,7 +68,6 @@ func GetSeriesFromDrafterBody(body string) (Series, error) {
 	words := (strings.Split(string(body), "\\\""))
 	seriesId := ""
 
-	fmt.Print(string(body))
 	for i := range words {
 		word := words[i]
 		if strings.Contains(word, "seriesId") {

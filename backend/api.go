@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,7 +38,6 @@ func GetResponseBody(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(string(respBody))
 
 	return respBody, nil
 }
@@ -85,7 +83,6 @@ func GetDrafterSeriesByURL(url string) (PicksAndBans, error) {
 
 	for i := range series {
 		url := "https://drafter.lol/draft/" + series[i] + "?game=" + strconv.Itoa(i+1)
-		fmt.Println(url)
 		draft, err := GetDrafterDraftByURL(url)
 		if err != nil {
 			return picksAndBans, err

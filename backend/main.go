@@ -58,7 +58,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if strings.Contains(url, "drafter.lol") {
 		switch mode {
 		case "draft":
-			log.Println("Getting draft from URL:", url)
 			draft, err := GetDrafterDraftByURL(url)
 			if err != nil {
 				log.Println(err)
