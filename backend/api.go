@@ -6,18 +6,40 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 func GetResponseBody(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0")
+	req.Header.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+	req.Header.Add("Accept-Language", "en-Us,en;q=0.9")
+	req.Header.Add("Connection", "keep-alive")
+	req.Header.Add("Upgrade-Insecure-Requests", "1")
+	req.Header.Add("Sec-Fetch-Dest", "document")
+	req.Header.Add("Sec-Fetch-Mode", "navigate")
+	req.Header.Add("Sec-Fetch-Site", "none")
+	req.Header.Add("Sec-Fetch-User", "?1")
+	req.Header.Add("Priority", "u=0, i")
+	req.Header.Add("TE", "trailers")
+
+	client := &http.Client{Timeout: 10 * time.Second}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
 
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(string(respBody))
 
 	return respBody, nil
 }
